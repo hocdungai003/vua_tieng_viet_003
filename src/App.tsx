@@ -16,7 +16,7 @@ function App() {
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [resetTimer, setResetTimer] = useState(false);
   const [advanceLevelTrigger, setAdvanceLevelTrigger] = useState(0);
-  const [gameStarted, setGameStarted] = useState(false); // Thêm state để kiểm soát trạng thái trò chơi
+  const [gameStarted, setGameStarted] = useState(false);
 
   const startNewGame = useCallback(() => {
     setLevel(1);
@@ -86,6 +86,7 @@ function App() {
     if (advanceLevelTrigger > 0) {
       const timer = setTimeout(() => {
         nextLevel();
+        setAdvanceLevelTrigger(0);
       }, 1100);
       return () => clearTimeout(timer);
     }
@@ -99,11 +100,6 @@ function App() {
     setGameActive(false);
   };
 
-  // Xóa useEffect tự động gọi startNewGame khi tải trang
-  // useEffect(() => {
-  //   startNewGame();
-  // }, [startNewGame]);
-
   // Hàm xử lý khi nhấn nút "Bắt đầu"
   const handleStartGame = () => {
     setGameStarted(true);
@@ -114,80 +110,79 @@ function App() {
   const syllableCount = gameStarted ? countSyllables(currentWord.word) : 0;
 
   return (
-<div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4 relative overflow-hidden">
-  {/* Background gradient chuyển động */}
-  <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 opacity-50 animate-gradient-shift"></div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background gradient chuyển động */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 opacity-50 animate-gradient-shift"></div>
 
-  {/* Hiệu ứng particle (hạt trôi nổi) */}
-  {[...Array(10)].map((_, i) => (
-    <div
-      key={i}
-      className="absolute bg-white rounded-full opacity-20 animate-particle"
-      style={{
-        width: `${Math.random() * 8 + 5}px`,
-        height: `${Math.random() * 8 + 5}px`,
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 5}s`,
-        animationDuration: `${Math.random() * 5 + 5}s`,
-      }}
-    ></div>
-  ))}
+      {/* Hiệu ứng particle (hạt trôi nổi) */}
+      {[...Array(10)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute bg-white rounded-full opacity-20 animate-particle"
+          style={{
+            width: `${Math.random() * 8 + 5}px`,
+            height: `${Math.random() * 8 + 5}px`,
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${Math.random() * 5 + 5}s`,
+          }}
+        ></div>
+      ))}
 
-  <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full relative z-10 animate-container-bounce">
-    {!gameStarted ? (
-      <div className="text-center relative">
-        {/* Tiêu đề với hiệu ứng bounce từng ký tự */}
-        <h2 className="text-3xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-          {Array.from("Ai Sẽ Là Vua Tiếng Việt Nhỉ?").map((char, index) => (
-            <span
-              key={index}
-              className="inline-block animate-bounce-char"
-              style={{ animationDelay: `${index * 0.05}s` }}
+      <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full relative z-10 animate-container-bounce">
+        {!gameStarted ? (
+          <div className="text-center relative">
+            {/* Tiêu đề với hiệu ứng bounce từng ký tự */}
+            <h2 className="text-3xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              {Array.from("Ai Sẽ Là Vua Tiếng Việt Nhỉ?").map((char, index) => (
+                <span
+                  key={index}
+                  className="inline-block animate-bounce-char"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </h2>
+
+            {/* Dòng mô tả với hiệu ứng sparkle */}
+            <div className="relative">
+              <p className="text-gray-600 mb-6 animate-fade-in-delayed">
+                Sẵn sàng thử thách trí tuệ của bạn chưa? Nhấn để bắt đầu!
+              </p>
+              {/* Hiệu ứng sparkle xung quanh dòng mô tả */}
+              <div className="absolute top-0 left-0 w-4 h-4 bg-yellow-300 rounded-full opacity-50 animate-sparkle"></div>
+              <div className="absolute bottom-0 right-0 w-4 h-4 bg-yellow-300 rounded-full opacity-50 animate-sparkle-delayed"></div>
+            </div>
+
+            {/* Nút "Bắt đầu" với hiệu ứng rotate, pulse, và glow khi hover */}
+            <button
+              onClick={handleStartGame}
+              className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 animate-pulse-shadow animate-slight-rotate group"
             >
-              {char}
-            </span>
-          ))}
-        </h2>
+              Bắt đầu
+              {/* Hiệu ứng glow khi hover */}
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-50 transition-opacity duration-300 animate-glow"></div>
+            </button>
 
-        {/* Dòng mô tả với hiệu ứng sparkle */}
-        <div className="relative">
-          <p className="text-gray-600 mb-6 animate-fade-in-delayed">
-            Sẵn sàng thử thách trí tuệ của bạn chưa? Nhấn để bắt đầu!
-          </p>
-          {/* Hiệu ứng sparkle xung quanh dòng mô tả */}
-          <div className="absolute top-0 left-0 w-4 h-4 bg-yellow-300 rounded-full opacity-50 animate-sparkle"></div>
-          <div className="absolute bottom-0 right-0 w-4 h-4 bg-yellow-300 rounded-full opacity-50 animate-sparkle-delayed"></div>
-        </div>
-
-        {/* Nút "Bắt đầu" với hiệu ứng rotate, pulse, và glow khi hover */}
-        <button
-          onClick={handleStartGame}
-          className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 animate-pulse-shadow animate-slight-rotate group"
-        >
-          Bắt đầu
-          {/* Hiệu ứng glow khi hover */}
-          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-50 transition-opacity duration-300 animate-glow"></div>
-        </button>
-
-        {/* Hiệu ứng bong bóng trôi nổi (tăng số lượng và thêm đổi màu) */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bg-gradient-to-r from-blue-300 to-purple-300 rounded-full opacity-30 animate-float animate-color-shift"
-            style={{
-              width: `${Math.random() * 40 + 20}px`,
-              height: `${Math.random() * 40 + 20}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${Math.random() * 5 + 5}s`,
-            }}
-          ></div>
-        ))}
-      </div>
-    ): (
-          // Hiển thị giao diện trò chơi khi đã bắt đầu
+            {/* Hiệu ứng bong bóng trôi nổi (tăng số lượng và thêm đổi màu) */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute bg-gradient-to-r from-blue-300 to-purple-300 rounded-full opacity-30 animate-float animate-color-shift"
+                style={{
+                  width: `${Math.random() * 40 + 20}px`,
+                  height: `${Math.random() * 40 + 20}px`,
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 3}s`,
+                  animationDuration: `${Math.random() * 5 + 5}s`,
+                }}
+              ></div>
+            ))}
+          </div>
+        ) : (
           <>
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center gap-2">
@@ -233,15 +228,22 @@ function App() {
               )}
             </div>
 
-            <form onSubmit={handleSubmit} className="mb-6">
+            <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Nhập từ đúng..."
-                className="w-full px-4 py-2 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none"
+                className="flex-1 px-4 py-2 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none"
                 disabled={!gameActive}
               />
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400"
+                disabled={!gameActive || !input.trim()} // Vô hiệu hóa nếu không có input hoặc game không active
+              >
+                Gửi
+              </button>
             </form>
 
             {message && (
