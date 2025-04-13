@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* index.css */
+
+/* Hiệu ứng gradient chuyển động cho background */
+@keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+  }
+  
+  /* Hiệu ứng particle (hạt trôi nổi) */
+  @keyframes particle {
+    0% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translateY(-50vh) translateX(20px);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(-100vh) translateX(0);
+      opacity: 0;
+    }
+  }
+  .animate-particle {
+    animation: particle linear infinite;
+  }
+  
+  /* Hiệu ứng bounce từng ký tự */
+  @keyframes bounceChar {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  .animate-bounce-char {
+    animation: bounceChar 0.5s ease-in-out;
+  }
+  
+  /* Hiệu ứng fade-in cho dòng mô tả */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-delayed {
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  /* Hiệu ứng sparkle */
+  @keyframes sparkle {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+  .animate-sparkle-delayed {
+    animation: sparkle 2s ease-in-out infinite 1s;
+  }
+  
+  /* Hiệu ứng pulse-shadow cho nút "Bắt đầu" */
+  @keyframes pulseShadow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+  }
+  .animate-pulse-shadow {
+    box-shadow: 0 0 0 rgba(59, 130, 246, 0.5);
+    animation: pulseShadow 2s infinite;
+  }
+  
+  /* Hiệu ứng xoay nhẹ cho nút "Bắt đầu" */
+  @keyframes slightRotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  .animate-slight-rotate {
+    animation: slightRotate 3s ease-in-out infinite;
+  }
+  
+  /* Hiệu ứng glow khi hover nút */
+  @keyframes glow {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .animate-glow {
+    animation: glow 1.5s ease-in-out infinite;
+  }
+  
+  /* Hiệu ứng bong bóng trôi nổi */
+  @keyframes float {
+    0% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.3;
+    }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Hiệu ứng đổi màu cho bong bóng */
+  @keyframes colorShift {
+    0% {
+      background: linear-gradient(to right, #93c5fd, #d8b4fe);
+    }
+    50% {
+      background: linear-gradient(to right, #d8b4fe, #93c5fd);
+    }
+    100% {
+      background: linear-gradient(to right, #93c5fd, #d8b4fe);
+    }
+  }
+  .animate-color-shift {
+    animation: colorShift 4s ease infinite;
+  }
+  
+  /* Hiệu ứng container bounce */
+  @keyframes containerBounce {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .animate-container-bounce {
+    animation: containerBounce 0.8s ease-in-out;
+  }
